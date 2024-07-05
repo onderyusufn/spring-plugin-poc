@@ -10,14 +10,16 @@
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <modules>
-        <module>plugin-platform</module>
+        <module>commons</module>
         <module>spring-plugin</module>
         <module>another-spring-plugin</module>
+        <module>transform-plugin</module>
+        <module>plugin-platform</module>
     </modules>
    
 </project>

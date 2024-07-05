@@ -1,7 +1,10 @@
 package com.ag04.pluginplatform.classloader;
 
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -9,6 +12,7 @@ import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 
+@RefreshScope
 public class PluginClassloader extends ClassLoader {
 
     private final String pluginsFolder;
@@ -35,7 +39,7 @@ public class PluginClassloader extends ClassLoader {
                 // we've just listed them, they're here
                 return null;
             }
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     @Override
@@ -43,7 +47,7 @@ public class PluginClassloader extends ClassLoader {
         String className = name.replace('.', '/').concat(".class");
         List<URL> resourceUrl = getResourceUrl(className);
 
-        if (resourceUrl.size() > 0) {
+        if (!resourceUrl.isEmpty()) {
             URL url = resourceUrl.iterator().next();
             byte[] bytes = getBytes(url);
             Class<?> clazz = defineClass(name, bytes, 0, bytes.length);
@@ -67,8 +71,8 @@ public class PluginClassloader extends ClassLoader {
     }
 
     private byte[] getBytes(final URL classUrl) {
-        try {
-            return classUrl.openStream().readAllBytes();
+        try(InputStream inputStream = classUrl.openStream()) {
+            return inputStream.readAllBytes();
         } catch (IOException e) {
             throw new RuntimeException();
         }

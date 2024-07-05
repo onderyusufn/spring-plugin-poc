@@ -1,15 +1,15 @@
 package com.ag04.pluginplatform;
 
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/p2")
 public class AnotherSpringController {
 
-    @GetMapping("anotherSpringController")
-    @ResponseBody
+    @GetMapping("/another-spring")
     public String get() {
         return "Hello from AnotherSpringController!";
     }
